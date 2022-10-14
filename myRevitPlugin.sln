@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "myRevitPlugin.SharedProject", "myRevitPlugin.SharedProject\myRevitPlugin.SharedProject.shproj", "{A0397671-0347-4B10-BC6D-28303FA034B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myRevitPlugin.2022", "myRevitPlugin.2022\myRevitPlugin.2022.csproj", "{70CB69CA-EFDE-41B3-8EF3-4BAD167E1101}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myRevitPlugin.2021", "myRevitPlugin.2021\myRevitPlugin.2021.csproj", "{283AF3BD-3CD1-4E53-BE76-563E68659CA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70CB69CA-EFDE-41B3-8EF3-4BAD167E1101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70CB69CA-EFDE-41B3-8EF3-4BAD167E1101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70CB69CA-EFDE-41B3-8EF3-4BAD167E1101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70CB69CA-EFDE-41B3-8EF3-4BAD167E1101}.Release|Any CPU.Build.0 = Release|Any CPU
+		{283AF3BD-3CD1-4E53-BE76-563E68659CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{283AF3BD-3CD1-4E53-BE76-563E68659CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{283AF3BD-3CD1-4E53-BE76-563E68659CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{283AF3BD-3CD1-4E53-BE76-563E68659CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D168357-98C1-4E82-B846-23E79F43F569}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		myRevitPlugin.SharedProject\myRevitPlugin.SharedProject.projitems*{283af3bd-3cd1-4e53-be76-563e68659ca7}*SharedItemsImports = 4
+		myRevitPlugin.SharedProject\myRevitPlugin.SharedProject.projitems*{70cb69ca-efde-41b3-8ef3-4bad167e1101}*SharedItemsImports = 4
+		myRevitPlugin.SharedProject\myRevitPlugin.SharedProject.projitems*{a0397671-0347-4b10-bc6d-28303fa034b9}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal
