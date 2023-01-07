@@ -1,0 +1,23 @@
+﻿Pomysły na funkcjonalność:
+- dodawanie parametru do Revision Clouds;
+- checkout elementu - jego historia, kto go stworzył, go edytował - czy to jest wykonalne?
+- Collect All Elements in Entire Project;
+
+
+// Pomysł na przycisk. Przycisk tworzący widoki na bazie widoków z RVT Linku
+- okienko z możliwością wyboru RVT linku
+- po wyborze linku, wyświetlają się widoki w tym linku(nazwa, id, level)
+- wyswietla się następnie taka tabelka gdzie po lewej stornie są widoki z RVT Linku a po prawej pusta tabelka obecnego modelu
+	- strzałeczką możesz sobie przenosić to lewo i prawo
+	- kliknij OK żeby zaakceptować
+- wyświetl wszystkie widoki z RVT Linka
+
+
+
+
+
+- get all RVT Links in the model
+- put them all in the drop down list of a view
+	- display Revit Link name on the list
+- select an object from drop down list
+-

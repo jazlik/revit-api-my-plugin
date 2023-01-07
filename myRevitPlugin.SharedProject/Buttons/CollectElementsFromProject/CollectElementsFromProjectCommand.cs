@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Interop;
@@ -7,25 +8,22 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using myRevitPlugin.Utilities;
 
-namespace myRevitPlugin.SeccondButton
+namespace myRevitPlugin.Buttons.CollectElementsFromProject
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class SecondButtonCommand : IExternalCommand
+    public class CollectElementsFromProjectCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
-                // Creating uiApp, model, viewModel and view inside the Execute method for a button.
                 var uiApp = commandData.Application;
-                var model = new SecondButtonModel(uiApp);
-                var viewModel = new SecondButtonViewModel(model);
-                var view = new SecondButtonView { DataContext = viewModel };
+                var model = new CollectElementsFromProjectModel(uiApp);
+                var viewModel = new CollectElementsFromProjectViewModel(model);
+                var view = new CollectElementsFromProjectView { DataContext = viewModel };
 
-                // View is attached to current process, which is Revit as a parent-child relation.
-                // When Revit is closed, view window is also closed.
                 var unused = new WindowInteropHelper(view);
                 unused.Owner = Process.GetCurrentProcess().MainWindowHandle;
 
@@ -41,16 +39,16 @@ namespace myRevitPlugin.SeccondButton
 
         public static void CreateButton(RibbonPanel panel)
         {
-            var assembly = Assembly.GetExecutingAssembly(); // Path to assembly needed for button.
+            var assembly = Assembly.GetExecutingAssembly();
             panel.AddItem(new PushButtonData(
                 MethodBase.GetCurrentMethod().DeclaringType?.Name,
-                "Second" + Environment.NewLine + "Button",
+                "Collect" + Environment.NewLine + "Elements",
                 assembly.Location,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName
                 )
             {
-                ToolTip = "Second Button command.",
-                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png") // _ is added as VS is adding it to folder name.
+                ToolTip = "Collect all elements from entire project.",
+                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png")
             }
             );
         }

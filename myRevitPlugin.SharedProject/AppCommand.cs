@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autodesk.Revit.UI;
+using myRevitPlugin.Buttons.CollectElementsFromProject;
 using myRevitPlugin.FirstButton;
 using myRevitPlugin.SeccondButton;
 
@@ -16,7 +17,7 @@ namespace myRevitPlugin
         {
             try
             {
-                // Put in try catch in case Tab with similar name already existed.
+                // Put in  - try catch - in case Tab with similar name already existed.
                 application.CreateRibbonTab("Jakub's Plugin");
             }
             catch (Exception e)
@@ -30,10 +31,9 @@ namespace myRevitPlugin
             // Creating buttons.
             FirstButtonCommand.CreateButton(ribbonPanel);
             SecondButtonCommand.CreateButton(ribbonPanel);
+            CollectElementsFromProjectCommand.CreateButton(ribbonPanel);
 
             return Result.Succeeded;
         }
     }
 }
-
-// Pomysł na przycisk. Przycisk tworzący widoki na bazie widoków z RVT Linku

@@ -10,6 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CollectElementsFromProject\CollectElementsFromProjectCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CollectElementsFromProject\CollectElementsFromProjectModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CollectElementsFromProject\CollectElementsFromProjectView.xaml.cs">
+      <DependentUpon>CollectElementsFromProjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CollectElementsFromProject\CollectElementsFromProjectViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CollectElementsFromProject\RVTLinkWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CollectElementsFromProject\ViewWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CreateViewsFromRvtLinkButton\CreateViewsFromRvtLinkButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FirstButton\FirstButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonCommand.cs" />
@@ -30,9 +38,16 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\2-symbol.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Buttons\CollectElementsFromProject\CollectElementsFromProjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)desc.txt" />
   </ItemGroup>
 </Project>

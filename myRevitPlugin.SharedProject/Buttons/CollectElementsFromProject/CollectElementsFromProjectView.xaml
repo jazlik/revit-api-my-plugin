@@ -1,0 +1,108 @@
+﻿<Window x:Name="CollectElementsFromProjectWindow"
+        x:Class="myRevitPlugin.CollectElementsFromProjectView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="CollectElementsFromProjectView"
+        Height="auto"
+        Width="900"
+        BorderThickness="0,5,0,20">
+
+    <!--xmlns:local="clr-namespace:myRevitPlugin"-->
+
+    <Window.Resources>
+        <Style x:Key="ComboBoxItemToBeSelectedStyle" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
+        </Style>
+        
+        <Style x:Key="RowToBeSelectedStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <ComboBox ItemsSource="{Binding RVTLinks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ItemContainerStyle="{StaticResource ComboBoxItemToBeSelectedStyle}">
+                <!--As ComboBox does not have a Command property, Command was called using Interaction.Triggers-->
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding ShowViewsFromRevitLinks}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+        <TextBlock x:Name="IsLinkSelected" Grid.Row="3"/>
+
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding ViewWrapperViews, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  RowStyle="{StaticResource RowToBeSelectedStyle}"
+                  AutoGenerateColumns="False"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Hidden"
+                  CanUserAddRows="False"
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="False"
+                  IsReadOnly="False"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  MaxHeight="400"
+                  Margin="10">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id"
+                                    Binding="{Binding Id, Mode=OneWay}"
+                                    Width="75"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="View Name"
+                                    Binding="{Binding Name, Mode=OneWay}"
+                                    Width="*"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="View Type"
+                                    Binding="{Binding ViewType, Mode=OneWay}"
+                                    Width="200"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="Level"
+                                    Binding="{Binding Level, Mode=OneWay}"
+                                    Width="*"
+                                    IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="2"
+                Width="120"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,105,0"
+                Content="Copy Selected View"
+                Command="{Binding CopyViewFromSelectedRevitLink, Mode=OneWay}"
+                CommandParameter="{Binding ElementName=CollectElementsFromProjectWindow}"/>
+        
+        <Button Grid.Row="2"
+                Width="75"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,15,0"
+                Content="Close"
+                Command="{Binding Close, Mode=OneWay}"
+                CommandParameter="{Binding ElementName=CollectElementsFromProjectWindow}"/>
+
+    </Grid>
+</Window>
