@@ -46,13 +46,9 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
         public void OnShowViewsFromRevitLinks(Window winObject)
         {
-            Document fromDocument = Model.GetSelectedRevitLink();
+            Document fromDocument = Model.GetSelectedRevitLink(RVTLinks);
             ViewWrapperViews = Model.CollectViewWrappersFromDocument(fromDocument);
         }
-
-        //public void OnCopyViewsFromRevitLinks(Window winObject)
-        //{
-        //}
 
         public void OnCopyViewFromSelectedRevitLink(Window winObject)
         {

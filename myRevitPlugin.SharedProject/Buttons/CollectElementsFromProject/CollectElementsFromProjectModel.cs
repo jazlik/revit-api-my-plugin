@@ -43,11 +43,8 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             return linkDoc;
         }
 
-        public Document GetSelectedRevitLink()
+        public Document GetSelectedRevitLink(ObservableCollection<RVTLinkWrapper> revitLinks)
         {
-            // ObservableCollection<RVTLinkWrapper> revitLinks = CollectRVTLinks();
-            // isObjectSelected nie działa a działał! Bo tutaj jest drugi raz CollectRVTLinks wywoływane! Dlatego! Trzeba jakos zassac revitlinks do tej funkcji bez wywoływania 2 raz CollectRevitLinks!
-            ObservableCollection<RVTLinkWrapper> revitLinks = ViewModel.RVTLinks;
             RVTLinkWrapper selected = revitLinks.Where(x => x.IsObjectSelected == true).FirstOrDefault();
             Document fromDocument = RevitLinkInstanceElementIdConvertToDocument(selected.Id);
 
@@ -75,22 +72,23 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             return views;
         }
 
-        public void CopyViews(Document doc)
-        {
-            Document toDocument = Doc;
-            Document fromDocument = GetSelectedRevitLink();
-            var views = CollectViewsFromDocument(doc);
+        // TO ZOSTAŁO CZASOWO WYŁĄCZONE!
+        //public void CopyViews(Document doc)
+        //{
+        //    Document toDocument = Doc;
+        //    Document fromDocument = GetSelectedRevitLink();
+        //    var views = CollectViewsFromDocument(doc);
 
-            int numDraftingElements = DuplicateViewsFromDocumentToDocument(fromDocument, views, toDocument);
-            int numDrafting = views.Count<View>();
+        //    int numDraftingElements = DuplicateViewsFromDocumentToDocument(fromDocument, views, toDocument);
+        //    int numDrafting = views.Count<View>();
 
-            // Show results
-            TaskDialog.Show("Statistics",
-                   String.Format("Copied: \n"
-                                 + "\t{0} drafting views.\n"
-                                 + "\t{1} new drafting elements created.",
-                   numDrafting, numDraftingElements));
-        }
+        //    // Show results
+        //    TaskDialog.Show("Statistics",
+        //           String.Format("Copied: \n"
+        //                         + "\t{0} drafting views.\n"
+        //                         + "\t{1} new drafting elements created.",
+        //           numDrafting, numDraftingElements));
+        //}
 
         public ObservableCollection<ViewWrapper> CollectViewWrappersFromDocument(Document doc)
         {
