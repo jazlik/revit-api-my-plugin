@@ -27,6 +27,8 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             get { return viewWrapperViews; }
             set { viewWrapperViews = value; RaisePropertyChanged(() => ViewWrapperViews); }
         }
+
+        public Document FromDocument { get; set; }
         #endregion
 
         public CollectElementsFromProjectViewModel(CollectElementsFromProjectModel model)
@@ -46,13 +48,13 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
         public void OnShowViewsFromRevitLinks(Window winObject)
         {
-            Document fromDocument = Model.GetSelectedRevitLink(RVTLinks);
-            ViewWrapperViews = Model.CollectViewWrappersFromDocument(fromDocument);
+            FromDocument = Model.GetSelectedRevitLink(RVTLinks);
+            ViewWrapperViews = Model.CollectViewWrappersFromDocument(FromDocument);
         }
 
         public void OnCopyViewFromSelectedRevitLink(Window winObject)
         {
-
+            Model.CopyViews(FromDocument);
         }
         #endregion
     }

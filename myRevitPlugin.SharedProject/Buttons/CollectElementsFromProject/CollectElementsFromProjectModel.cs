@@ -71,24 +71,21 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
             return views;
         }
+        public void CopyViews(Document fromDocument)
+        {
+            Document toDocument = Doc;
+            var views = CollectViewsFromDocument(fromDocument);
 
-        // TO ZOSTAŁO CZASOWO WYŁĄCZONE!
-        //public void CopyViews(Document doc)
-        //{
-        //    Document toDocument = Doc;
-        //    Document fromDocument = GetSelectedRevitLink();
-        //    var views = CollectViewsFromDocument(doc);
+            int numDraftingElements = DuplicateViewsFromDocumentToDocument(fromDocument, views, toDocument);
+            int numDrafting = views.Count<View>();
 
-        //    int numDraftingElements = DuplicateViewsFromDocumentToDocument(fromDocument, views, toDocument);
-        //    int numDrafting = views.Count<View>();
-
-        //    // Show results
-        //    TaskDialog.Show("Statistics",
-        //           String.Format("Copied: \n"
-        //                         + "\t{0} drafting views.\n"
-        //                         + "\t{1} new drafting elements created.",
-        //           numDrafting, numDraftingElements));
-        //}
+            // Show results
+            TaskDialog.Show("Statistics",
+                   String.Format("Copied: \n"
+                                 + "\t{0} drafting views.\n"
+                                 + "\t{1} new drafting elements created.",
+                   numDrafting, numDraftingElements));
+        }
 
         public ObservableCollection<ViewWrapper> CollectViewWrappersFromDocument(Document doc)
         {
@@ -159,8 +156,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
                 options.SetDuplicateTypeNamesHandler(new HideAndAcceptDuplicateTypeNamesHandler());
 
                 // Copy the input elements.
-                copiedIds =
-                    ElementTransformUtils.CopyElements(fromDocument, elementIds, toDocument, Transform.Identity, options);
+                copiedIds = ElementTransformUtils.CopyElements(fromDocument, elementIds, toDocument, Transform.Identity, options);
 
                 // Set failure handler to hide duplicate types warnings which may be posted.
                 FailureHandlingOptions failureOptions = t1.GetFailureHandlingOptions();
