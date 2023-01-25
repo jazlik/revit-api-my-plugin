@@ -54,7 +54,8 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
         public void OnCopyViewFromSelectedRevitLink(Window winObject)
         {
-            Model.CopyViews(FromDocument);
+            Model.GetSelectedViews(ViewWrapperViews, FromDocument);
+            //Model.CopyViews(FromDocument);
         }
         #endregion
     }

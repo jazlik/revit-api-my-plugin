@@ -36,24 +36,18 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             return new ObservableCollection<RVTLinkWrapper>(revitLinkInstances);
         }
 
-        public Document RevitLinkInstanceElementIdConvertToDocument(ElementId elementId)
-        {
-            RevitLinkInstance link = Doc.GetElement(elementId) as RevitLinkInstance;
-            Document linkDoc = link.GetLinkDocument();
-            return linkDoc;
-        }
-
         public Document GetSelectedRevitLink(ObservableCollection<RVTLinkWrapper> revitLinks)
         {
             RVTLinkWrapper selected = revitLinks.Where(x => x.IsObjectSelected == true).FirstOrDefault();
-            Document fromDocument = RevitLinkInstanceElementIdConvertToDocument(selected.Id);
+            RevitLinkInstance link = Doc.GetElement(selected.Id) as RevitLinkInstance;
+            Document linkDoc = link.GetLinkDocument();
 
-            return fromDocument;
+            return linkDoc;
         }
 
         #endregion
 
-        #region Duplicating Views Methods
+        #region Collecting Views Methods
 
         public IEnumerable<View> CollectViewsFromDocument(Document doc)
         {
@@ -71,6 +65,48 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
             return views;
         }
+
+        public ObservableCollection<ViewWrapper> CollectViewWrappersFromDocument(Document doc)
+        {
+            var views = CollectViewsFromDocument(doc);
+            var viewWrapperViews = views.Select(x => new ViewWrapper(x));
+
+            return new ObservableCollection<ViewWrapper>(viewWrapperViews);
+        }
+
+        // MUSZĘ TERAZ WZIĄĆ VIEWS, KTÓRE SĄ SELECTED I TYLKO TE A POTEM WRZUCIĆ JE DO COPY VIEWS!
+
+        public List<View> GetSelectedViews(ObservableCollection<ViewWrapper> viewWrappers, Document doc)
+        {
+            List<ViewWrapper> selected = new List<ViewWrapper>();
+            List<View> views = new List<View>();
+
+            foreach (ViewWrapper viewWrapper in viewWrappers)
+            {
+                if (viewWrapper.IsObjectSelected == true)
+                {
+                    selected.Add(viewWrapper);
+                }
+
+                else
+                {
+                    continue;
+                }
+            }
+
+            foreach (ViewWrapper viewWrapper in selected)
+            {
+                View view = doc.GetElement(viewWrapper.Id) as View;
+                views.Add(view);
+            }
+
+            return views;
+        }
+
+        #endregion
+
+        #region Copying Views Methods
+
         public void CopyViews(Document fromDocument)
         {
             Document toDocument = Doc;
@@ -87,12 +123,6 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
                    numDrafting, numDraftingElements));
         }
 
-        public ObservableCollection<ViewWrapper> CollectViewWrappersFromDocument(Document doc)
-        {
-            var views = CollectViewsFromDocument(doc);
-            var viewWrapperViews = views.Select(x => new ViewWrapper(x));
-            return new ObservableCollection<ViewWrapper>(viewWrapperViews);
-        }
 
         /// <summary>
         /// Utility to duplicate drafting views and their contents from one document to another.
@@ -111,8 +141,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
                 tg.Start();
 
                 // Use LINQ to convert to list of ElementIds for use in CopyElements() method
-                List<ElementId> ids =
-                    views.AsEnumerable<View>().ToList<View>().ConvertAll<ElementId>(ViewConvertToElementId);
+                List<ElementId> ids = views.AsEnumerable<View>().ToList<View>().ConvertAll<ElementId>(ViewConvertToElementId);
 
                 // Duplicate.  Pass true to get a map from source element to its copy
                 Dictionary<ElementId, ElementId> viewMap =
@@ -131,6 +160,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
             return numberOfDetailElements;
         }
+
 
         ///<summary>
         /// Duplicates a set of elements across documents.

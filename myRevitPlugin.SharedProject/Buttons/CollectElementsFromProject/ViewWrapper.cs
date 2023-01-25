@@ -6,8 +6,9 @@ using System.Text;
 
 namespace myRevitPlugin.Buttons.CollectElementsFromProject
 {
-    public class ViewWrapper : INotifyPropertyChanged
+    public class ViewWrapper
     {
+        #region Properties
         public string Name { get; set; }
         public ViewType ViewType { get; set; } 
         public Level Level { get; set; }
@@ -18,8 +19,10 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
         public bool IsObjectSelected
         {
             get { return isObjectSelected; }
-            set { isObjectSelected = value; RaisePropertyChanged(nameof(IsObjectSelected)); }
+            set { isObjectSelected = value; }
         }
+
+        #endregion
 
         public ViewWrapper(View view)
         {
@@ -27,15 +30,5 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             Id = view.Id;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public static explicit operator ViewWrapper(List<View> v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
