@@ -96,8 +96,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
             foreach (ViewWrapper viewWrapper in selected)
             {
-                View view = doc.GetElement(viewWrapper.Id) as View;
-                views.Add(view);
+                views.Add(doc.GetElement(viewWrapper.Id) as View);
             }
 
             return views;
@@ -107,10 +106,10 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
         #region Copying Views Methods
 
-        public void CopyViews(Document fromDocument)
+        public void CopyViews(ObservableCollection<ViewWrapper> viewWrappers, Document fromDocument)
         {
             Document toDocument = Doc;
-            var views = CollectViewsFromDocument(fromDocument);
+            var views = GetSelectedViews(viewWrappers, fromDocument);
 
             int numDraftingElements = DuplicateViewsFromDocumentToDocument(fromDocument, views, toDocument);
             int numDrafting = views.Count<View>();
