@@ -74,8 +74,6 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             return new ObservableCollection<ViewWrapper>(viewWrapperViews);
         }
 
-        // MUSZĘ TERAZ WZIĄĆ VIEWS, KTÓRE SĄ SELECTED I TYLKO TE A POTEM WRZUCIĆ JE DO COPY VIEWS!
-
         public List<View> GetSelectedViews(ObservableCollection<ViewWrapper> viewWrappers, Document doc)
         {
             List<ViewWrapper> selected = new List<ViewWrapper>();
@@ -111,7 +109,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             Document toDocument = Doc;
             var views = GetSelectedViews(viewWrappers, fromDocument);
 
-            int numDraftingElements = DuplicateViewsFromDocumentToDocument(fromDocument, views, toDocument);
+            int numDraftingElements = DuplicateDraftingViewsFromDocumentToDocument(fromDocument, views, toDocument);
             int numDrafting = views.Count<View>();
 
             // Show results
@@ -130,7 +128,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
         /// <param name="views">The collection of drafting views.</param>
         /// <param name="toDocument">The target document.</param>
         /// <returns>The number of drafting elements created in the copied views.</returns>
-        public static int DuplicateViewsFromDocumentToDocument(Document fromDocument, IEnumerable<View> views, Document toDocument)
+        public static int DuplicateDraftingViewsFromDocumentToDocument(Document fromDocument, IEnumerable<View> views, Document toDocument)
         {
             int numberOfDetailElements = 0;
 
@@ -142,9 +140,8 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
                 // Use LINQ to convert to list of ElementIds for use in CopyElements() method
                 List<ElementId> ids = views.AsEnumerable<View>().ToList<View>().ConvertAll<ElementId>(ViewConvertToElementId);
 
-                // Duplicate.  Pass true to get a map from source element to its copy
-                Dictionary<ElementId, ElementId> viewMap =
-                    DuplicateElementsAcrossDocuments(fromDocument, ids, toDocument, true);
+                // Duplicate. Pass true to get a map from source element to its copy
+                Dictionary<ElementId, ElementId> viewMap = DuplicateElementsAcrossDocuments(fromDocument, ids, toDocument, true);
 
                 // For each copied view, copy the contents
                 foreach (ElementId viewId in viewMap.Keys)
@@ -184,10 +181,10 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
                 CopyPasteOptions options = new CopyPasteOptions();
                 options.SetDuplicateTypeNamesHandler(new HideAndAcceptDuplicateTypeNamesHandler());
 
-                // Copy the input elements.
+                // Copy the input elements
                 copiedIds = ElementTransformUtils.CopyElements(fromDocument, elementIds, toDocument, Transform.Identity, options);
 
-                // Set failure handler to hide duplicate types warnings which may be posted.
+                // Set failure handler to hide duplicate types warnings which may be posted
                 FailureHandlingOptions failureOptions = t1.GetFailureHandlingOptions();
                 failureOptions.SetFailuresPreprocessor(new HidePasteDuplicateTypesPreprocessor());
                 t1.Commit(failureOptions);
