@@ -78,7 +78,7 @@
                                     Width="200"
                                     IsReadOnly="True"/>
                 <DataGridTextColumn Header="Level"
-                                    Binding="{Binding Level, Mode=OneWay}"
+                                    Binding="{Binding LevelName, Mode=OneWay}"
                                     Width="*"
                                     IsReadOnly="True"/>
             </DataGrid.Columns>

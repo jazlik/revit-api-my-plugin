@@ -243,7 +243,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             // Collect view-specific elements in source view
             FilteredElementCollector collector = new FilteredElementCollector(fromView.Document, fromView.Id);
 
-            // Skip elements which don't have a category.  In testing, this was
+            // Skip elements which don't have a category. In testing, this was
             // the revision table and the extents element, which should not be copied as they will
             // be automatically created for the copied view.
             collector.WherePasses(new ElementCategoryFilter(ElementId.InvalidElementId, true));
@@ -264,8 +264,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
                     options.SetDuplicateTypeNamesHandler(new HideAndAcceptDuplicateTypeNamesHandler());
 
                     // Copy the elements using no transformation
-                    ICollection<ElementId> copiedElements =
-                        ElementTransformUtils.CopyElements(fromView, toCopy, toView, Transform.Identity, options);
+                    ICollection<ElementId> copiedElements = ElementTransformUtils.CopyElements(fromView, toCopy, toView, Transform.Identity, options);
                     numberOfCopiedElements = copiedElements.Count;
 
                     // Set failure handler to skip any duplicate types warnings that are posted.
@@ -298,7 +297,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             #region IDuplicateTypeNamesHandler Members
 
             /// <summary>
-            /// Implementation of the IDuplicateTypeNameHandler
+            /// Implementation of the IDuplicateTypeNameHandler.
             /// </summary>
             /// <param name="args"></param>
             /// <returns></returns>

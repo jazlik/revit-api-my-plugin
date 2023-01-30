@@ -11,7 +11,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
         #region Properties
         public string Name { get; set; }
         public ViewType ViewType { get; set; } 
-        public Level Level { get; set; }
+        public string LevelName { get; set; }
         public ElementId Id { get; set; }
 
         private bool isObjectSelected;
@@ -26,8 +26,11 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
         public ViewWrapper(View view)
         {
-            Name = view.Name;
             Id = view.Id;
+            Name = view.Name;
+            ViewType = view.ViewType;
+            LevelName = (view.GenLevel != null) ? view.GenLevel.Name : "Not applicable.";
+
         }
 
     }
