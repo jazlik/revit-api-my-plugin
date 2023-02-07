@@ -6,12 +6,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="CollectElementsFromProjectView"
-        Height="auto"
-        Width="900"
-        BorderThickness="0,5,0,20">
+        Title="Copy Drafting Views From Linked Model"
+        MinHeight="450"
+        Height="450"
+        MinWidth="450"
+        MaxWidth="1500"
+        Width="600">
 
-    <!--xmlns:local="clr-namespace:myRevitPlugin"-->
+    <!--How to make window as small as possible - so it only widens/heightens when there are more views?-->
 
     <Window.Resources>
         <Style x:Key="ComboBoxItemToBeSelectedStyle" TargetType="{x:Type ComboBoxItem}">
@@ -25,14 +27,15 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
             <ComboBox ItemsSource="{Binding RVTLinks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      ItemContainerStyle="{StaticResource ComboBoxItemToBeSelectedStyle}">
+                      ItemContainerStyle="{StaticResource ComboBoxItemToBeSelectedStyle}"
+                      Margin="10">
                 <!--As ComboBox does not have a Command property, Command was called using Interaction.Triggers-->
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
@@ -47,8 +50,6 @@
             </ComboBox>
         </StackPanel>
 
-        <TextBlock x:Name="IsLinkSelected" Grid.Row="3"/>
-
         <DataGrid Grid.Row="1"
                   ItemsSource="{Binding ViewWrapperViews, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   RowStyle="{StaticResource RowToBeSelectedStyle}"
@@ -61,8 +62,7 @@
                   IsReadOnly="False"
                   SelectionMode="Extended"
                   SelectionUnit="FullRow"
-                  MaxHeight="400"
-                  Margin="10">
+                  Margin="10,0,10,10">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id"
@@ -75,7 +75,7 @@
                                     IsReadOnly="True"/>
                 <DataGridTextColumn Header="View Type"
                                     Binding="{Binding ViewType, Mode=OneWay}"
-                                    Width="200"
+                                    Width="*"
                                     IsReadOnly="True"/>
                 <DataGridTextColumn Header="Level"
                                     Binding="{Binding LevelName, Mode=OneWay}"
@@ -89,7 +89,7 @@
                 Height="30"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Margin="0,0,105,0"
+                Margin="15,0,105,0"
                 Content="Copy Selected View"
                 Command="{Binding CopyViewFromSelectedRevitLink, Mode=OneWay}"
                 CommandParameter="{Binding ElementName=CollectElementsFromProjectWindow}"/>
