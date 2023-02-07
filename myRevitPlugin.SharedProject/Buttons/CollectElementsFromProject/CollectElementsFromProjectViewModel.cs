@@ -29,6 +29,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
         }
 
         public Document FromDocument { get; set; }
+
         #endregion
 
         public CollectElementsFromProjectViewModel(CollectElementsFromProjectModel model)
@@ -55,7 +56,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
         public void OnCopyViewFromSelectedRevitLink(Window winObject)
         {
             Model.CopyViews(ViewWrapperViews, FromDocument);
-        }
+    }
         #endregion
     }
 }

@@ -13,6 +13,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 {
     public class CollectElementsFromProjectModel
     {
+        #region Properties
         public UIApplication UiApp { get; }
         public Document Doc { get; }
         public CollectElementsFromProjectViewModel ViewModel { get; }
@@ -22,6 +23,8 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             UiApp = uiApp;
             Doc = uiApp.ActiveUIDocument.Document;
         }
+
+        #endregion
 
         #region Revit Links Methods
 
@@ -53,9 +56,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
         {
 
             List<Type> viewTypes = new List<Type>();
-            viewTypes.Add(typeof(View3D));
-            viewTypes.Add(typeof(ViewPlan));
-            viewTypes.Add(typeof(ViewSection));
+            viewTypes.Add(typeof(ViewDrafting));
 
             FilteredElementCollector collector = new FilteredElementCollector(doc);
             ElementMulticlassFilter filter = new ElementMulticlassFilter(viewTypes);
@@ -113,13 +114,20 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             int numDrafting = views.Count<View>();
 
             // Show results
-            TaskDialog.Show("Statistics",
-                   String.Format("Copied: \n"
+            if (numDraftingElements >= 0)
+            {
+                TaskDialog.Show("Statistics", 
+                    String.Format("Copied: \n"
                                  + "\t{0} drafting views.\n"
                                  + "\t{1} new drafting elements created.",
                    numDrafting, numDraftingElements));
-        }
+            }
 
+            else
+            {
+                TaskDialog.Show("Statistics", "No drawings were copied.");
+            }
+        }
 
         /// <summary>
         /// Utility to duplicate drafting views and their contents from one document to another.
@@ -135,28 +143,37 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
             // Transaction group for all activities
             using (TransactionGroup tg = new TransactionGroup(toDocument, "API - Duplication across documents with detailing"))
             {
-                tg.Start();
-
-                // Use LINQ to convert to list of ElementIds for use in CopyElements() method
-                List<ElementId> ids = views.AsEnumerable<View>().ToList<View>().ConvertAll<ElementId>(ViewConvertToElementId);
-
-                // Duplicate. Pass true to get a map from source element to its copy
-                Dictionary<ElementId, ElementId> viewMap = DuplicateElementsAcrossDocuments(fromDocument, ids, toDocument, true);
-
-                // For each copied view, copy the contents
-                foreach (ElementId viewId in viewMap.Keys)
+                try
                 {
-                    View fromView = fromDocument.GetElement(viewId) as View;
-                    View toView = toDocument.GetElement(viewMap[viewId]) as View;
-                    numberOfDetailElements += DuplicateDetailingAcrossViews(fromView, toView);
+                    tg.Start();
+
+                    // Use LINQ to convert to list of ElementIds for use in CopyElements() method
+                    List<ElementId> ids = views.AsEnumerable<View>().ToList<View>().ConvertAll<ElementId>(ViewConvertToElementId);
+
+                    // Duplicate. Pass true to get a map from source element to its copy
+                    Dictionary<ElementId, ElementId> viewMap = DuplicateElementsAcrossDocuments(fromDocument, ids, toDocument, true);
+
+
+                    // For each copied view, copy the contents
+                    foreach (ElementId viewId in viewMap.Keys)
+                    {
+                        View fromView = fromDocument.GetElement(viewId) as View;
+                        View toView = toDocument.GetElement(viewMap[viewId]) as View;
+                        numberOfDetailElements += DuplicateDetailingAcrossViews(fromView, toView);
+                    }
+
+                    tg.Assimilate();
                 }
 
-                tg.Assimilate();
+                catch
+                {
+                    numberOfDetailElements = -1;
+                    tg.RollBack();
+                }
             }
 
             return numberOfDetailElements;
         }
-
 
         ///<summary>
         /// Duplicates a set of elements across documents.
