@@ -5,9 +5,9 @@ namespace myRevitPlugin
     /// <summary>
     /// Interaction logic for CollectElementsFromProjectView.xaml
     /// </summary>
-    public partial class CollectElementsFromProjectView
+    public partial class CopyDraftingViewsView
     {
-        public CollectElementsFromProjectView()
+        public CopyDraftingViewsView()
         {
             InitializeComponent();
         }

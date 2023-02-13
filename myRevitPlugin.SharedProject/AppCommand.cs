@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autodesk.Revit.UI;
-using myRevitPlugin.Buttons.CollectElementsFromProject;
+using myRevitPlugin.Buttons.CopyDraftingViews;
 using myRevitPlugin.FirstButton;
 using myRevitPlugin.SeccondButton;
 
@@ -31,7 +31,7 @@ namespace myRevitPlugin
             // Creating buttons.
             FirstButtonCommand.CreateButton(ribbonPanel);
             SecondButtonCommand.CreateButton(ribbonPanel);
-            CollectElementsFromProjectCommand.CreateButton(ribbonPanel);
+            CopyDraftingViewsCommand.CreateButton(ribbonPanel);
 
             return Result.Succeeded;
         }

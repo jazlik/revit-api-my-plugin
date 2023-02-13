@@ -4,12 +4,12 @@ using Autodesk.Revit.DB;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
-namespace myRevitPlugin.Buttons.CollectElementsFromProject
+namespace myRevitPlugin.Buttons.CopyDraftingViews
 {
-    public class CollectElementsFromProjectViewModel : ViewModelBase
+    public class CopyDraftingViewsViewModel : ViewModelBase
     {
         #region Properties
-        public CollectElementsFromProjectModel Model { get; set; }
+        public CopyDraftingViewsModel Model { get; set; }
         public RelayCommand<Window> Close { get; set; }
         public RelayCommand<Window> ShowViewsFromRevitLinks { get; set; }
         public RelayCommand<Window> CopyViewFromSelectedRevitLink { get; set; }
@@ -32,7 +32,7 @@ namespace myRevitPlugin.Buttons.CollectElementsFromProject
 
         #endregion
 
-        public CollectElementsFromProjectViewModel(CollectElementsFromProjectModel model)
+        public CopyDraftingViewsViewModel(CopyDraftingViewsModel model)
         {
             Model = model;
             RVTLinks = Model.CollectRVTLinks();

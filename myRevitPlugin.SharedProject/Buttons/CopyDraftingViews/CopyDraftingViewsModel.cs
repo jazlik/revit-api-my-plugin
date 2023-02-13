@@ -9,16 +9,16 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using myRevitPlugin.SeccondButton;
 
-namespace myRevitPlugin.Buttons.CollectElementsFromProject
+namespace myRevitPlugin.Buttons.CopyDraftingViews
 {
-    public class CollectElementsFromProjectModel
+    public class CopyDraftingViewsModel
     {
         #region Properties
         public UIApplication UiApp { get; }
         public Document Doc { get; }
-        public CollectElementsFromProjectViewModel ViewModel { get; }
+        public CopyDraftingViewsViewModel ViewModel { get; }
 
-        public CollectElementsFromProjectModel(UIApplication uiApp)
+        public CopyDraftingViewsModel(UIApplication uiApp)
         {
             UiApp = uiApp;
             Doc = uiApp.ActiveUIDocument.Document;

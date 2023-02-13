@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace myRevitPlugin.Buttons.CollectElementsFromProject
+namespace myRevitPlugin.Buttons.CopyDraftingViews
 {
     public class ViewWrapper
     {

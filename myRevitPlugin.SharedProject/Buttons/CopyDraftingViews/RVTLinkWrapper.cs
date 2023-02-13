@@ -1,10 +1,7 @@
-﻿using Autodesk.Revit.DB;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System;
+using Autodesk.Revit.DB;
 
-namespace myRevitPlugin.Buttons.CollectElementsFromProject
+namespace myRevitPlugin.Buttons.CopyDraftingViews
 {
     public class RVTLinkWrapper/* : INotifyPropertyChanged*/
     {

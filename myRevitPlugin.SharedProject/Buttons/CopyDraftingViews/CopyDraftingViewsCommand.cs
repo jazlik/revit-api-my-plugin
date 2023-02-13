@@ -8,21 +8,21 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using myRevitPlugin.Utilities;
 
-namespace myRevitPlugin.Buttons.CollectElementsFromProject
+namespace myRevitPlugin.Buttons.CopyDraftingViews
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class CollectElementsFromProjectCommand : IExternalCommand
+    public class CopyDraftingViewsCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
                 var uiApp = commandData.Application;
-                var model = new CollectElementsFromProjectModel(uiApp);
-                var viewModel = new CollectElementsFromProjectViewModel(model);
-                var view = new CollectElementsFromProjectView { DataContext = viewModel };
+                var model = new CopyDraftingViewsModel(uiApp);
+                var viewModel = new CopyDraftingViewsViewModel(model);
+                var view = new CopyDraftingViewsView { DataContext = viewModel };
 
                 var unused = new WindowInteropHelper(view);
                 unused.Owner = Process.GetCurrentProcess().MainWindowHandle;
