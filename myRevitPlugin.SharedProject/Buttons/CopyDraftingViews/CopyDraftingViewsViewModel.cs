@@ -56,7 +56,7 @@ namespace myRevitPlugin.Buttons.CopyDraftingViews
         public void OnCopyViewFromSelectedRevitLink(Window winObject)
         {
             Model.CopyViews(ViewWrapperViews, FromDocument);
-    }
+        }
         #endregion
     }
 }

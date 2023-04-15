@@ -7,7 +7,6 @@ using System.Windows.Documents;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
-using myRevitPlugin.SeccondButton;
 
 namespace myRevitPlugin.Buttons.CopyDraftingViews
 {

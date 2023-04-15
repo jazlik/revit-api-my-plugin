@@ -2,6 +2,7 @@
 using System.Linq;
 using Autodesk.Revit.UI;
 using myRevitPlugin.Buttons.CopyDraftingViews;
+using myRevitPlugin.Buttons.ShowScheduleAndItsSheet;
 using myRevitPlugin.FirstButton;
 using myRevitPlugin.SeccondButton;
 
@@ -32,6 +33,7 @@ namespace myRevitPlugin
             FirstButtonCommand.CreateButton(ribbonPanel);
             SecondButtonCommand.CreateButton(ribbonPanel);
             CopyDraftingViewsCommand.CreateButton(ribbonPanel);
+            ShowScheduleAndItsSheetCommand.CreateButton(ribbonPanel);
 
             return Result.Succeeded;
         }

@@ -18,7 +18,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\CopyDraftingViewsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\RVTLinkWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\ViewWrapper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)CreateViewsFromRvtLinkButton\CreateViewsFromRvtLinkButtonCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FirstButton\FirstButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonModel.cs" />
