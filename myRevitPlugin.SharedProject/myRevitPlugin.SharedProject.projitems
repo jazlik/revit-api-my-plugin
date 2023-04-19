@@ -18,6 +18,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\CopyDraftingViewsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\RVTLinkWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\ViewWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetView.xaml.cs">
+      <DependentUpon>ShowScheduleAndItsSheetView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetViewModel.cs" />
@@ -41,6 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\CopyDraftingViewsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
