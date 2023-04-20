@@ -13,8 +13,6 @@
         MaxWidth="1500"
         Width="600">
 
-    <!--How to make window as small as possible - so it only widens/heightens when there are more views?-->
-
     <Window.Resources>
         <Style x:Key="ComboBoxItemToBeSelectedStyle" TargetType="{x:Type ComboBoxItem}">
             <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>

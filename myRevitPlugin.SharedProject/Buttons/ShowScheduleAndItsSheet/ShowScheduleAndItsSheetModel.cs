@@ -25,34 +25,60 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
 
         #endregion
 
-        public void ShowScheduleAndSheetMethod()
+
+        public ObservableCollection<SchedulePlacement> CollectSchedulePlacements()
         {
             var schedulePlacements = new FilteredElementCollector(Doc)
                     .OfClass(typeof(ScheduleSheetInstance))
                     .WhereElementIsNotElementType()
-                    .Cast<ScheduleSheetInstance>();
-
-            List<String> viewScheduleNames = new List<String>();
-            foreach (ScheduleSheetInstance schedulePlacement in schedulePlacements)
-            {
-                viewScheduleNames.Add(schedulePlacement.Name);
-            }
-
-            List<ElementId> viewScheduleOwnerIds = new List<ElementId>();
-            foreach (ScheduleSheetInstance schedulePlacement in schedulePlacements)
-            {
-                viewScheduleOwnerIds.Add(schedulePlacement.OwnerViewId);
-            }
-            var scheduleNameAndSheetIdPair = viewScheduleNames.Zip(viewScheduleOwnerIds, (x, y) => new Tuple<string, object>(x, y))
-                .ToList();
-
-            String msg = String.Empty;
-            foreach (var pair in scheduleNameAndSheetIdPair)
-            {
-                msg = msg + pair.Item1 + " " + pair.Item2 + "\n";
-            }
-
-            TaskDialog.Show("Results", msg);
+                    .Cast<ScheduleSheetInstance>()
+                    .Select(x => new SchedulePlacement(x));
+            return new ObservableCollection<SchedulePlacement>(schedulePlacements);
         }
+
+        //public void ShowScheduleAndSheetMethod()
+        //{
+        //    var schedulePlacements = new FilteredElementCollector(Doc)
+        //            .OfClass(typeof(ScheduleSheetInstance))
+        //            .WhereElementIsNotElementType()
+        //            .Cast<ScheduleSheetInstance>();
+
+        //    List<ElementId> viewScheduleIds = new List<ElementId>();
+        //    foreach (ScheduleSheetInstance schedulePlacement in schedulePlacements)
+        //    {
+        //        viewScheduleIds.Add(schedulePlacement.Id);
+        //    }
+
+        //    List<string> viewScheduleNames = new List<string>();
+        //    foreach (ScheduleSheetInstance schedulePlacement in schedulePlacements)
+        //    {
+        //        viewScheduleNames.Add(schedulePlacement.Name);
+        //    }
+
+        //    List<ElementId> viewScheduleOwnerIds = new List<ElementId>();
+        //    foreach (ScheduleSheetInstance schedulePlacement in schedulePlacements)
+        //    {
+        //        viewScheduleOwnerIds.Add(schedulePlacement.OwnerViewId);
+        //    }
+
+        //    List<string> viewScheduleOwnerNames = new List<string>();
+        //    foreach (ElementId viewScheduleOwnerId in viewScheduleOwnerIds)
+        //    {
+        //        Element scheduleOwner = Doc.GetElement(viewScheduleOwnerId);
+        //        viewScheduleOwnerNames.Add(scheduleOwner.Name);
+        //    }
+
+
+        //    var scheduleNameAndSheetIdPair = viewScheduleNames.Zip(viewScheduleOwnerIds, (x, y) => new Tuple<string, object>(x, y))
+        //        .ToList();
+
+        //    String msg = String.Empty;
+        //    foreach (var pair in scheduleNameAndSheetIdPair)
+        //    {
+        //        msg = msg + pair.Item1 + " " + pair.Item2 + "\n";
+        //    }
+
+        //    TaskDialog.Show("Results", msg);
+        //}
     }
 }

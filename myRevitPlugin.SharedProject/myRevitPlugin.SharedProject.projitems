@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\CopyDraftingViewsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\RVTLinkWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\ViewWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\SchedulePlacement.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetView.xaml.cs">
       <DependentUpon>ShowScheduleAndItsSheetView.xaml</DependentUpon>
     </Compile>

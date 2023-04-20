@@ -22,13 +22,13 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
             {
                 UIApplication uiApp = commandData.Application;
                 var model = new ShowScheduleAndItsSheetModel(uiApp);
-                //var viewModel = new ShowScheduleAndItsSheetViewModel(model);
-                //var view = new ShowScheduleAndItsSheetView { DataContext = viewModel };
+                var viewModel = new ShowScheduleAndItsSheetViewModel(model);
+                var view = new ShowScheduleAndItsSheetView { DataContext = viewModel };
 
-                //var unused = new WindowInteropHelper(view);
-                //unused.Owner = Process.GetCurrentProcess().MainWindowHandle;
+                var unused = new WindowInteropHelper(view);
+                unused.Owner = Process.GetCurrentProcess().MainWindowHandle;
 
-                //view.ShowDialog();
+                view.ShowDialog();
 
                 return Result.Succeeded;
             }

@@ -10,13 +10,52 @@
         Height="450"
         Width="600">
 
-    
+    <Window.Resources>
+        <Style x:Key="RowToBeSelectedStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
+        <DataGrid Grid.Row="0"
+                  ItemsSource="{Binding SchedulePlacementElements, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  RowStyle="{StaticResource RowToBeSelectedStyle}"
+                  AutoGenerateColumns="False"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Hidden"
+                  CanUserAddRows="False"
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="False"
+                  IsReadOnly="False"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  Margin="10,10,10,10">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Schedule Id"
+                                    Binding="{Binding ScheduleId, Mode=OneWay}"
+                                    Width="75"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="Schedule Name"
+                                    Binding="{Binding ScheduleName, Mode=OneWay}"
+                                    Width="*"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="Sheet Id"
+                                    Binding="{Binding ScheduleOwnerId, Mode=OneWay}"
+                                    Width="75"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="Sheet Name"
+                                    Binding="{Binding ScheduleOwnerName, Mode=OneWay}"
+                                    Width="*"
+                                    IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
         <Button Grid.Row="2"
                 Width="75"
                 Height="30"
