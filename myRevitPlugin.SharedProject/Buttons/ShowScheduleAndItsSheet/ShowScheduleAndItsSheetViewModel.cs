@@ -12,6 +12,7 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
         #region Properties
         public ShowScheduleAndItsSheetModel Model { get; set; }
         public RelayCommand<Window> Close { get; set; }
+        public RelayCommand<Window> SelectSelectedElement { get; set; }
 
         private ObservableCollection<SchedulePlacement> schedulePlacementElements;
         public ObservableCollection<SchedulePlacement> SchedulePlacementElements
@@ -27,12 +28,18 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
             Model = model;
             Close = new RelayCommand<Window>(OnClose);
             SchedulePlacementElements = Model.CollectSchedulePlacements();
+            SelectSelectedElement = new RelayCommand<Window>(OnSelectSelectedElement);
         }
 
         #region Commands
         private void OnClose(Window winObject)
         {
             winObject.Close();
+        }
+
+        public void OnSelectSelectedElement(Window winObject)
+        {
+            Model.GetSelectedScheduleOrSheet(SchedulePlacementElements);
         }
         #endregion
     }

@@ -42,12 +42,12 @@ namespace myRevitPlugin.Buttons.CopyDraftingViews
             var assembly = Assembly.GetExecutingAssembly();
             panel.AddItem(new PushButtonData(
                 MethodBase.GetCurrentMethod().DeclaringType?.Name,
-                "Collect" + Environment.NewLine + "Elements",
+                "Copy" + Environment.NewLine + "Drafting Views",
                 assembly.Location,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName
                 )
             {
-                ToolTip = "Collect all elements from entire project.",
+                ToolTip = "Collects drafting views from linked models and enables copying them to host model.",
                 LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png")
             }
             );

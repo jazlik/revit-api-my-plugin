@@ -18,6 +18,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\CopyDraftingViewsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\RVTLinkWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\ViewWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueView.xaml.cs">
+      <DependentUpon>CopyParameterValueView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\SchedulePlacement.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetView.xaml.cs">
       <DependentUpon>ShowScheduleAndItsSheetView.xaml</DependentUpon>
@@ -45,6 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\CopyDraftingViewsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

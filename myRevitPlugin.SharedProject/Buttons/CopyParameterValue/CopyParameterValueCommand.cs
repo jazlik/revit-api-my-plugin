@@ -7,21 +7,21 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using myRevitPlugin.Utilities;
 
-namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
+namespace myRevitPlugin.Buttons.CopyParameterValue
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class ShowScheduleAndItsSheetCommand : IExternalCommand
+    public class CopyParameterValueCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
                 var uiApp = commandData.Application;
-                var model = new ShowScheduleAndItsSheetModel(uiApp);
-                var viewModel = new ShowScheduleAndItsSheetViewModel(model);
-                var view = new ShowScheduleAndItsSheetView { DataContext = viewModel };
+                var model = new CopyParameterValueModel(uiApp);
+                var viewModel = new CopyParameterValueViewModel(model);
+                var view = new CopyParameterValueView { DataContext = viewModel };
 
                 var unused = new WindowInteropHelper(view);
                 unused.Owner = Process.GetCurrentProcess().MainWindowHandle;
@@ -41,12 +41,12 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
             var assembly = Assembly.GetExecutingAssembly();
             panel.AddItem(new PushButtonData(
                 MethodBase.GetCurrentMethod().DeclaringType?.Name,
-                "Schedule" + Environment.NewLine + "Finder",
+                "Parameter" + Environment.NewLine + "Copier",
                 assembly.Location,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName
                 )
             {
-                ToolTip = "For finding schedule and its sheet owner.",
+                ToolTip = "For copying values between parameters.",
                 LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png")
             }
             );

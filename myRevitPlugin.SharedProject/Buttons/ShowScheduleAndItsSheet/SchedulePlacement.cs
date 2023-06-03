@@ -13,6 +13,13 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
         public string ScheduleName { get; set; }
         public ElementId ScheduleOwnerId { get; set; }
         public string ScheduleOwnerName { get; set; }
+
+        private bool isObjectSelected;
+        public bool IsObjectSelected
+        {
+            get { return isObjectSelected; }
+            set { isObjectSelected = value; }
+        }
         #endregion
 
         public SchedulePlacement(ScheduleSheetInstance schedulePlacement)

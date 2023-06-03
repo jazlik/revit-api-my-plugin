@@ -14,8 +14,13 @@
         <Style x:Key="RowToBeSelectedStyle" TargetType="{x:Type DataGridRow}">
             <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
         </Style>
+        <!--<Style x:Key="CellToBeSelectedStyle" TargetType="{x:Type DataGridCell}">
+            <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
+        </Style>-->
     </Window.Resources>
 
+    <!--Nie działa okienko jak robię inny styl ROWa-->
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -55,7 +60,7 @@
                                     IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+
         <Button Grid.Row="2"
                 Width="75"
                 Height="30"
