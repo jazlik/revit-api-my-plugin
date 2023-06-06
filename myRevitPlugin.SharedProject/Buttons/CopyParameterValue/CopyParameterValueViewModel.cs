@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Documents;
 using Autodesk.Revit.DB;
@@ -12,8 +13,6 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         #region Properties
         public CopyParameterValueModel Model { get; set; }
         public RelayCommand<Window> Close { get; set; }
-        public RelayCommand<Window> SelectSelectedElement { get; set; }
-
         #endregion
 
         public CopyParameterValueViewModel(CopyParameterValueModel model)
@@ -25,6 +24,9 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         #region Commands
         private void OnClose(Window winObject)
         {
+            IList<Category> cats = Model.GetAllDefinedCategoriesInDocument();
+            var test = Model.GetParametersValuesForCategories(cats);
+            Model.DisplayMethod(test);
             winObject.Close();
         }
         #endregion

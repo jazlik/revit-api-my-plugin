@@ -22,9 +22,7 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
             UiApp = uiApp;
             Doc = uiApp.ActiveUIDocument.Document;
         }
-
         #endregion
-
 
         public ObservableCollection<SchedulePlacement> CollectSchedulePlacements()
         {

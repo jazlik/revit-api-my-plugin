@@ -20,7 +20,6 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
             get { return schedulePlacementElements; }
             set { schedulePlacementElements = value; RaisePropertyChanged(() => SchedulePlacementElements); }
         }
-
         #endregion
 
         public ShowScheduleAndItsSheetViewModel(ShowScheduleAndItsSheetModel model)
