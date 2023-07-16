@@ -32,6 +32,7 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
                 return Result.Failed;
             }
         }

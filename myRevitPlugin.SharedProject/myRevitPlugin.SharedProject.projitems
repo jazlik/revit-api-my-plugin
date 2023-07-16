@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\CopyDraftingViewsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\RVTLinkWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyDraftingViews\ViewWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CategoryWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueView.xaml.cs">

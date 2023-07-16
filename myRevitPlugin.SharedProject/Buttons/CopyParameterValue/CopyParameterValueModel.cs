@@ -26,63 +26,47 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         #endregion
 
         /// <summary>
-        /// Gets all categories that can have parameters in the document.
+        /// Gets all categories from the document that can have Project Parameters.
         /// </summary>
-        /// <returns>List of defined categories.</returns>
-        public IList<Category> GetAllDefinedCategoriesInDocument()
+        /// <returns>List of Category objects from the document.</returns>
+        public List<Category> GetAllCategoriesInDocument()
         {
             Categories categories = Doc.Settings.Categories;
-            IList <Category> cats = new List<Category>();
-            IList<string> catNames = new List<string>();
-            foreach (Category cat in categories)
+            List <Category> listOfCategories = new List<Category>();
+            foreach (Category category in categories)
             {
                 // Check if the category is valid and can be used in the model
-                if (cat != null && cat.AllowsBoundParameters)
+                if (category != null && category.AllowsBoundParameters)
                 {
-                    // Get the category name
-                    string catName = cat.Name;
-                    catNames.Add(catName);
-
-                    // Add the category name to the list
-                    cats.Add(cat);
+                    listOfCategories.Add(category);
                 }
             }
-
-            TaskDialog.Show("TITLE", ("Category size:{0}", cats.Count).ToString());
-            return cats;
+            return listOfCategories;
         }
 
-        /// <summary>
-        /// Gets all elements from list of category objects.
-        /// </summary>
-        /// <returns>NOTHING.</returns>
-        public FilteredElementCollector GetAllElementsFromCategories(IList<Category> cats)
+        public FilteredElementCollector GetAllElementsOfGivenCategory(Category category)
         {
-            IList<ElementFilter> filter = new List<ElementFilter>(cats.Count);
-
-            foreach (Category cat in cats)
-            {
-                // Get BuiltInCategory from Category.Id integer value
-                BuiltInCategory enumCategory = (BuiltInCategory)cat.Id.IntegerValue;
-
-                // Add BuiltInCategory filter to list of filters
-                filter.Add(new ElementCategoryFilter(enumCategory));
-            }
-
-            LogicalOrFilter categoryFilter = new LogicalOrFilter(filter);
-
             FilteredElementCollector elements = new FilteredElementCollector(Doc)
                 .WhereElementIsNotElementType()
                 .WhereElementIsViewIndependent()
-                .WherePasses(categoryFilter);
+                .OfCategory((BuiltInCategory)category.Id.IntegerValue);
 
             return elements;
         }
 
-        /// <summary>
-        /// Gets all parameters from an element.
-        /// </summary>
-        /// <returns>Values of element's parameters.</returns>
+        public Category GetSelectedCategory(List<CategoryWrapper> listOfCategoryWrappers)
+        {
+            CategoryWrapper selectedCategory = listOfCategoryWrappers.Where(x => x.IsObjectSelected == true).FirstOrDefault();
+            Category category = Category.GetCategory(Doc, selectedCategory.Id);
+            return category;
+        }
+
+        public List<Parameter> GetAllParametersOfAGivenElement(Element element)
+        {
+            // var ele = element.Parameters;
+            return (List<Parameter>)element.GetOrderedParameters();
+        }
+
         public List<string> GetParametersValuesFromElement(Element element)
         {
             IList<Parameter> ps = element.GetOrderedParameters();
@@ -96,70 +80,102 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
             return psValues;
         }
 
-        public Dictionary<string, Dictionary<string, List<string>>> GetParametersValuesForCategories(IList<Category> cats)
-        {
-            // Set up the return value dictionary
-            Dictionary<string,
-                Dictionary<string,
-                    List<string>>>
-                        mapCatsToUIdToParamValues
-                            = new Dictionary<string,
-                            Dictionary<string,
-                                List<string>>>();
+        ///// <summary>
+        ///// Gets all elements from list of category objects.
+        ///// </summary>
+        ///// <returns>NOTHING.</returns>
+        //public FilteredElementCollector GetAllElementsFromCategories(IList<Category> cats)
+        //{
+        //    IList<ElementFilter> filter = new List<ElementFilter>(cats.Count);
+
+        //    foreach (Category cat in cats)
+        //    {
+        //        // Get BuiltInCategory from Category.Id integer value
+        //        BuiltInCategory enumCategory = (BuiltInCategory)cat.Id.IntegerValue;
+
+        //        // Add BuiltInCategory filter to list of filters
+        //        filter.Add(new ElementCategoryFilter(enumCategory));
+        //    }
+
+        //    LogicalOrFilter categoryFilter = new LogicalOrFilter(filter);
+
+        //    FilteredElementCollector elements = new FilteredElementCollector(Doc)
+        //        .WhereElementIsNotElementType()
+        //        .WhereElementIsViewIndependent()
+        //        .WherePasses(categoryFilter);
+
+        //    return elements;
+        //}
+
+        /// <summary>
+        /// Gets all parameters from an element.
+        /// </summary>
+        /// <returns>Values of element's parameters.</returns>
+
+        //public Dictionary<string, Dictionary<string, List<string>>> GetParametersValuesForCategories(IList<Category> cats)
+        //{
+        //    // Set up the return value dictionary
+        //    Dictionary<string,
+        //        Dictionary<string,
+        //            List<string>>>
+        //                mapCatsToUIdToParamValues
+        //                    = new Dictionary<string,
+        //                    Dictionary<string,
+        //                        List<string>>>();
 
 
-            //string AddSpaceBeforeUppercase(string input)
-            //{
-            //    string result = "";
+        //    //string AddSpaceBeforeUppercase(string input)
+        //    //{
+        //    //    string result = "";
 
-            //    for (int i = 0; i < input.Length; i++)
-            //    {
-            //        // Check if the current character is uppercase
-            //        if (char.IsUpper(input[i]))
-            //        {
-            //            // Add a space before the uppercase character
-            //            result += " ";
-            //        }
+        //    //    for (int i = 0; i < input.Length; i++)
+        //    //    {
+        //    //        // Check if the current character is uppercase
+        //    //        if (char.IsUpper(input[i]))
+        //    //        {
+        //    //            // Add a space before the uppercase character
+        //    //            result += " ";
+        //    //        }
 
-            //        // Add the current character to the result string
-            //        result += input[i];
-            //    }
-            //    result = result.Substring(1);
-            //    return result;
-            //}
+        //    //        // Add the current character to the result string
+        //    //        result += input[i];
+        //    //    }
+        //    //    result = result.Substring(1);
+        //    //    return result;
+        //    //}
 
-            // One top level dictionary per category
-            foreach (Category cat in cats)
-            {
-                mapCatsToUIdToParamValues.Add(cat.Name, new Dictionary<string, List<string>>());
-            }
+        //    // One top level dictionary per category
+        //    foreach (Category cat in cats)
+        //    {
+        //        mapCatsToUIdToParamValues.Add(cat.Name, new Dictionary<string, List<string>>());
+        //    }
 
-            // Collect all required element
-            var elements = GetAllElementsFromCategories(cats);
-            foreach(Element ele in elements)
-            {
-                Category cat = ele.Category;
-                if(null == cat)
-                {
-                    Debug.Print("element {0} {1} has null category", ele.Id, ele.Name);
-                    continue;
-                }
+        //    // Collect all required element
+        //    var elements = GetAllElementsFromCategories(cats);
+        //    foreach(Element ele in elements)
+        //    {
+        //        Category cat = ele.Category;
+        //        if(null == cat)
+        //        {
+        //            Debug.Print("element {0} {1} has null category", ele.Id, ele.Name);
+        //            continue;
+        //        }
 
-                List<string> paramsValues = GetParametersValuesFromElement(ele);
+        //        List<string> paramsValues = GetParametersValuesFromElement(ele);
 
-                //BuiltInCategory bic = (BuiltInCategory)ele.Category.Id.IntegerValue;
+        //        //BuiltInCategory bic = (BuiltInCategory)ele.Category.Id.IntegerValue;
 
-                //string catKeyTest = bic.ToString().Substring(4);
-                //string catKey = AddSpaceBeforeUppercase(catKeyTest);
+        //        //string catKeyTest = bic.ToString().Substring(4);
+        //        //string catKey = AddSpaceBeforeUppercase(catKeyTest);
 
-                string catKey = ele.Category.Name.ToString();
-                string uId = ele.UniqueId;
+        //        string catKey = ele.Category.Name.ToString();
+        //        string uId = ele.UniqueId;
 
-                mapCatsToUIdToParamValues[catKey].Add(uId, paramsValues);
-            }
+        //        mapCatsToUIdToParamValues[catKey].Add(uId, paramsValues);
+        //    }
 
-            return mapCatsToUIdToParamValues;
-        }
+        //    return mapCatsToUIdToParamValues;
+        //}
 
         public void DisplayMethod(Dictionary<string,
                 Dictionary<string,
@@ -194,12 +210,6 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         }
 
         // JAK WRÓCISZ DO TEGO KURSU TO ZOBACZ CO TU JEST NAPISANE. NA TEN MOMENT ZROBIĆ METODĘ, KTÓRA ZACIĄGA CI PARAMETRY I WYPLYWA ICH DANE DO CONSOLI - ODPAL REVITA 2021 NA HOST MODELU I ZOBACZ CO TO JEST!
-
-
-        // Get all categories from the document
-        // Get all elements filtered by the categories of the document
-        // Get all parameters from the element
-
 
 
         // Show these parameters in two separate lists FROM on left and TO on right

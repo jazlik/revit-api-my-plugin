@@ -14,6 +14,9 @@
         <Style x:Key="RowToBeSelectedStyle" TargetType="{x:Type DataGridRow}">
             <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
         </Style>
+        <Style x:Key="ComboBoxItemToBeSelectedStyle" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
+        </Style>
         <!--<Style x:Key="CellToBeSelectedStyle" TargetType="{x:Type DataGridCell}">
             <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
         </Style>-->
@@ -23,19 +26,100 @@
     
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="2"
-                Width="75"
-                Height="30"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Margin="0,0,15,0"
-                Content="Close"
-                Command="{Binding Close, Mode=OneWay}"
-                CommandParameter="{Binding ElementName=ShowScheduleAndItsSheetViewWindow}"/>
+        <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="2">
+            <ComboBox ItemsSource="{Binding ListOfCategoryWrappers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ItemContainerStyle="{StaticResource ComboBoxItemToBeSelectedStyle}"
+                      Margin="10">
+                <!--As ComboBox does not have a Command property, Command was called using Interaction.Triggers-->
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding ShowCategoryParameters}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
+                  Grid.Column="0"
+                  HorizontalAlignment="Left"
+                  Margin="10,0,10,10"
+                  ItemsSource="{Binding ListOfCategoryParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  RowStyle="{StaticResource RowToBeSelectedStyle}"
+                  AutoGenerateColumns="False"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Hidden"
+                  CanUserAddRows="False"
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="False"
+                  IsReadOnly="False"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="From Parameter"
+                                    Binding="{Binding Name, Mode=OneWay}"
+                                    Width="*"
+                                    IsReadOnly="True"/>
+                </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="10,0,10,10"
+                  HorizontalAlignment="Right"
+                  ItemsSource="{Binding ListOfCategoryParameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  RowStyle="{StaticResource RowToBeSelectedStyle}"
+                  AutoGenerateColumns="False"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Hidden"
+                  CanUserAddRows="False"
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="False"
+                  IsReadOnly="False"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="To Parameter"
+                                    Binding="{Binding Name, Mode=OneWay}"
+                                    Width="*"
+                                    IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Width="75"
+                    Height="30"
+                    Margin="0,0,15,0"
+                    Content="Copy Value"
+                    Command="{Binding Close, Mode=OneWay}"
+                    CommandParameter="{Binding ElementName=ShowScheduleAndItsSheetViewWindow}"/>
+
+            <Button Width="75"
+                    Height="30"
+                    Margin="0,0,15,0"
+                    Content="Close"
+                    Command="{Binding Close, Mode=OneWay}"
+                    CommandParameter="{Binding ElementName=ShowScheduleAndItsSheetViewWindow}"/>
+        </StackPanel>
 
     </Grid>
 </Window>
