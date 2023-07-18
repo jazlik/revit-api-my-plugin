@@ -25,6 +25,7 @@
       <DependentUpon>CopyParameterValueView.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\CopyParameterValueViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Buttons\CopyParameterValue\ElementParameterWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\SchedulePlacement.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetView.xaml.cs">
       <DependentUpon>ShowScheduleAndItsSheetView.xaml</DependentUpon>

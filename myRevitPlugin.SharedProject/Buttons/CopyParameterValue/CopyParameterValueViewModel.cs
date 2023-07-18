@@ -19,6 +19,12 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         public List<CategoryWrapper> ListOfCategoryWrappers { get; set; }
         public List<Parameter> ListOfCategoryParameters { get; set; }
 
+        private ObservableCollection<ElementParameterWrapper> listOfElementParameterWrappers;
+        public ObservableCollection<ElementParameterWrapper> ListOfElementParameterWrappers
+        {
+            get { return listOfElementParameterWrappers; }
+            set { listOfElementParameterWrappers = value; RaisePropertyChanged(() => ListOfElementParameterWrappers); }
+        }
 
         #endregion
 
@@ -35,7 +41,7 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         public void OnShowCategoryParameters(Window winObject)
         {
             Category selectedCategory = Model.GetSelectedCategory(ListOfCategoryWrappers);
-            ListOfCategoryParameters = Model.GetAllParametersOfGivenCategoryFromFirstElement(selectedCategory);
+            ListOfElementParameterWrappers = Model.GetAllParametersOfGivenCategoryFromFirstElement(selectedCategory);
         }
         private void OnClose(Window winObject)
         {
