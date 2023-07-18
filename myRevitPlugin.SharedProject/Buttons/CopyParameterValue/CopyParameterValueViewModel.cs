@@ -17,8 +17,6 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         public RelayCommand<Window> ShowCategoryParameters { get; set; }
         public List<Category> ListOfCategories { get; set; }
         public List<CategoryWrapper> ListOfCategoryWrappers { get; set; }
-
-        // Lista parameterów przypisanych do danej kategorii:
         public List<Parameter> ListOfCategoryParameters { get; set; }
 
 
@@ -29,15 +27,15 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
             Model = model;
             Close = new RelayCommand<Window>(OnClose);
             ShowCategoryParameters = new RelayCommand<Window>(OnShowCategoryParameters);
-            ListOfCategories = Model.GetAllCategoriesInDocument().OrderBy(x => x.Name).ToList();
+            ListOfCategories = Model.GetAllPresentElementCategoriesInDocument().OrderBy(x => x.Name).ToList();
             ListOfCategoryWrappers = ListOfCategories.Select(x => new CategoryWrapper(x)).ToList();
         }
 
         #region Commands
         public void OnShowCategoryParameters(Window winObject)
         {
-            var cosTam = Model.GetSelectedCategory(ListOfCategoryWrappers);
-            // ListOfCategoryParameters
+            Category selectedCategory = Model.GetSelectedCategory(ListOfCategoryWrappers);
+            ListOfCategoryParameters = Model.GetAllParametersOfGivenCategoryFromFirstElement(selectedCategory);
         }
         private void OnClose(Window winObject)
         {

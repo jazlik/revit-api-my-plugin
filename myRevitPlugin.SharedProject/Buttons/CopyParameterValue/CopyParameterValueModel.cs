@@ -26,24 +26,45 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         #endregion
 
         /// <summary>
-        /// Gets all categories from the document that can have Project Parameters.
+        /// Gets all categories from the document that are not null, can have Project Parameters and have at least 1 element in the model.
         /// </summary>
         /// <returns>List of Category objects from the document.</returns>
-        public List<Category> GetAllCategoriesInDocument()
+        public List<Category> GetAllPresentElementCategoriesInDocument()
         {
             Categories categories = Doc.Settings.Categories;
             List <Category> listOfCategories = new List<Category>();
             foreach (Category category in categories)
             {
-                // Check if the category is valid and can be used in the model
                 if (category != null && category.AllowsBoundParameters)
                 {
-                    listOfCategories.Add(category);
+                    FilteredElementCollector categoryElements = new FilteredElementCollector(Doc)
+                    .OfCategory((BuiltInCategory)category.Id.IntegerValue)
+                    .WhereElementIsNotElementType();
+
+                    if (categoryElements.Count() > 0)
+                    {
+                        listOfCategories.Add(category);
+                    }
+
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                else
+                {
+                    continue;
                 }
             }
             return listOfCategories;
         }
 
+        /// <summary>
+        /// Gets all elements of input category object.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns>FilteredElementCollector object.</returns>
         public FilteredElementCollector GetAllElementsOfGivenCategory(Category category)
         {
             FilteredElementCollector elements = new FilteredElementCollector(Doc)
@@ -54,6 +75,11 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
             return elements;
         }
 
+        /// <summary>
+        /// Get Category object, using a list of CategoryWrapper objects, that has property IsObjectSelected set to true.
+        /// </summary>
+        /// <param name="listOfCategoryWrappers"></param>
+        /// <returns>Category object.</returns>
         public Category GetSelectedCategory(List<CategoryWrapper> listOfCategoryWrappers)
         {
             CategoryWrapper selectedCategory = listOfCategoryWrappers.Where(x => x.IsObjectSelected == true).FirstOrDefault();
@@ -61,9 +87,10 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
             return category;
         }
 
-        public List<Parameter> GetAllParametersOfAGivenElement(Element element)
+        public List<Parameter> GetAllParametersOfGivenCategoryFromFirstElement(Category category)
         {
-            // var ele = element.Parameters;
+            ElementFilter elementCategoryFilter = new ElementCategoryFilter((BuiltInCategory)category.Id.IntegerValue);
+            Element element = new FilteredElementCollector(Doc).WherePasses(elementCategoryFilter).ToElements().First();
             return (List<Parameter>)element.GetOrderedParameters();
         }
 
@@ -177,42 +204,40 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         //    return mapCatsToUIdToParamValues;
         //}
 
-        public void DisplayMethod(Dictionary<string,
-                Dictionary<string,
-                    List<string>>> mapCatsToUIdToParamValues)
-        {
-            List<string> keys = new List<string>(mapCatsToUIdToParamValues.Keys);
-            keys.Sort();
+        //public void DisplayMethod(Dictionary<string,
+        //        Dictionary<string,
+        //            List<string>>> mapCatsToUIdToParamValues)
+        //{
+        //    List<string> keys = new List<string>(mapCatsToUIdToParamValues.Keys);
+        //    keys.Sort();
 
-            foreach (string key in keys)
-            {
-                Dictionary<string, List<string>> els = mapCatsToUIdToParamValues[key];
+        //    foreach (string key in keys)
+        //    {
+        //        Dictionary<string, List<string>> els = mapCatsToUIdToParamValues[key];
 
-                int n = els.Count;
+        //        int n = els.Count;
 
-                Debug.Print("{0} ({1} elements):", key, n);
+        //        Debug.Print("{0} ({1} elements):", key, n);
 
-                if (0 < n)
-                {
-                    List<string> uIds = new List<string>(els.Keys);
-                    string uId = uIds[0];
+        //        if (0 < n)
+        //        {
+        //            List<string> uIds = new List<string>(els.Keys);
+        //            string uId = uIds[0];
 
-                    List<string> paramsValues = els[uId];
-                    paramsValues.Sort();
+        //            List<string> paramsValues = els[uId];
+        //            paramsValues.Sort();
 
-                    n = paramsValues.Count;
+        //            n = paramsValues.Count;
 
-                    Debug.Print("   first element {0} has {1} parameters:", uId, n);
+        //            Debug.Print("   first element {0} has {1} parameters:", uId, n);
 
-                    paramsValues.ForEach(pv => Debug.Print("   " + pv));
-                }
-            }
-        }
+        //            paramsValues.ForEach(pv => Debug.Print("   " + pv));
+        //        }
+        //    }
+        //}
 
-        // JAK WRÓCISZ DO TEGO KURSU TO ZOBACZ CO TU JEST NAPISANE. NA TEN MOMENT ZROBIĆ METODĘ, KTÓRA ZACIĄGA CI PARAMETRY I WYPLYWA ICH DANE DO CONSOLI - ODPAL REVITA 2021 NA HOST MODELU I ZOBACZ CO TO JEST!
+        // Trzeba zrobić na odwrót: zebrać wszystkie elementy w dokumencie
 
-
-        // Show these parameters in two separate lists FROM on left and TO on right
         // Select 1 parameter from left column and 1 paramter from right column
         // Click Copy data
         // Window pops up saying, are you sure you want to copy data from Parameter A to Parameter B? Click Yes or No
