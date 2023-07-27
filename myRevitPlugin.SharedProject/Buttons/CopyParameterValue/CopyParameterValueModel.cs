@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -103,23 +104,53 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
             return new ObservableCollection<ElementParameterWrapper>(elementParameterWrappers);
         }
 
-        public List<string> GetParametersValuesFromElement(Element element)
+        /// <summary>
+        /// Copy an observable collection and all its objects by creating a new list and creating a new object for each object in the observable collection.
+        /// </summary>
+        /// <param name="observableCollection"></param>
+        /// <returns></returns>
+        public ObservableCollection<ElementParameterWrapper> CopyElementParameterWrapperCollection(ObservableCollection<ElementParameterWrapper> observableCollection)
         {
-            IList<Parameter> ps = element.GetOrderedParameters();
-
-            List<string> psValues = new List<string>(ps.Count);
-
-            foreach (Parameter p in ps)
+            List<ElementParameterWrapper> clonedObservableCollection = observableCollection.Select(x => new ElementParameterWrapper(x)
             {
-                psValues.Add(p.AsValueString());
-            }
+                Name = x.Name,
+                Id = x.Id,
+                GUID = x.GUID
+            }).ToList();
 
-            return psValues;
+            return new ObservableCollection<ElementParameterWrapper>(clonedObservableCollection);
         }
 
-        // Trzeba zrobić na odwrót: zebrać wszystkie elementy w dokumencie
+        public void CopyParameterValueFromParameterToParameter(IList<ElementParameterWrapper> elementParameterWrapperList1, IList<ElementParameterWrapper> elementParameterWrapperList2, Category selectedCategory)
+        {
+            try
+            {
 
-        // Select 1 parameter from left column and 1 paramter from right column
+            
+            // Muszę wiedzieć jaki parametr skopiować do jakiego parametru
+            var par1 = elementParameterWrapperList1.Where(x => x.IsObjectSelected);
+            string par1name = par1.ElementAt(0).Name;
+            var par2 = elementParameterWrapperList2.Where(x => x.IsObjectSelected);
+            string par2name = par2.ElementAt(0).Name;
+            }
+
+            catch (Exception ex)
+            {
+                return;
+            }
+
+            // Zebrać wszystkie elementy danej kategorii
+            // List<Element> elementsList = GetAllElementsOfGivenCategory(selectedCategory).ToElements().ToList();
+            // Skopiować wartość parametru From do parametru To
+
+
+            //using (Transaction t = new Transaction(Doc, "Set Parameters"))
+            //{
+            //    t.Start();
+            //    t.Commit();
+            //}
+        }
+
         // Click Copy data
         // Window pops up saying, are you sure you want to copy data from Parameter A to Parameter B? Click Yes or No
         // Parameter data is copied

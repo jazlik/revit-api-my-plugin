@@ -70,6 +70,5 @@
                 Content="Close"
                 Command="{Binding Close, Mode=OneWay}"
                 CommandParameter="{Binding ElementName=ShowScheduleAndItsSheetViewWindow}"/>
-
     </Grid>
 </Window>

@@ -91,7 +91,7 @@
                 Content="Copy Selected View"
                 Command="{Binding CopyViewFromSelectedRevitLink, Mode=OneWay}"
                 CommandParameter="{Binding ElementName=CopyDraftingViewsWindow}"/>
-        
+
         <Button Grid.Row="2"
                 Width="75"
                 Height="30"
@@ -101,6 +101,5 @@
                 Content="Close"
                 Command="{Binding Close, Mode=OneWay}"
                 CommandParameter="{Binding ElementName=CopyDraftingViewsWindow}"/>
-
     </Grid>
 </Window>

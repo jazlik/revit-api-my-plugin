@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
 using System.Text;
 
@@ -15,7 +16,9 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         public bool IsObjectSelected
         {
             get { return isObjectSelected; }
-            set { isObjectSelected = value; }
+            set { isObjectSelected = value;
+                RaisePropertyChanged(nameof(IsObjectSelected));
+            }
         }
 
         public ElementParameterWrapper(Parameter parameter)
@@ -27,5 +30,21 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
                 GUID = parameter.GUID;
             }
         }
+        public ElementParameterWrapper(ElementParameterWrapper parameter)
+        {
+            Name = parameter.Name;
+            Id = parameter.Id;
+            if (parameter.GUID != null)
+            {
+                GUID = parameter.GUID;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }
