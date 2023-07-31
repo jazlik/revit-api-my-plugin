@@ -98,7 +98,11 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
         public ObservableCollection<ElementParameterWrapper> GetAllParametersOfGivenCategoryFromFirstElement(Category category)
         {
             ElementFilter elementCategoryFilter = new ElementCategoryFilter((BuiltInCategory)category.Id.IntegerValue);
-            Element element = new FilteredElementCollector(Doc).WherePasses(elementCategoryFilter).ToElements().First();
+            Element element = new FilteredElementCollector(Doc)
+                .WherePasses(elementCategoryFilter)
+                .WhereElementIsNotElementType()
+                .ToElements()
+                .First();
             List<ElementParameterWrapper> elementParameterWrappers = element.GetOrderedParameters().Select(x => new ElementParameterWrapper(x)).ToList();
 
             return new ObservableCollection<ElementParameterWrapper>(elementParameterWrappers);
@@ -114,7 +118,7 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
             List<ElementParameterWrapper> clonedObservableCollection = observableCollection.Select(x => new ElementParameterWrapper(x)
             {
                 Name = x.Name,
-                Id = x.Id,
+                BuiltInParameterId = x.BuiltInParameterId,
                 GUID = x.GUID
             }).ToList();
 
@@ -123,35 +127,53 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
 
         public void CopyParameterValueFromParameterToParameter(IList<ElementParameterWrapper> elementParameterWrapperList1, IList<ElementParameterWrapper> elementParameterWrapperList2, Category selectedCategory)
         {
-            try
+            List<Element> elementsList = GetAllElementsOfGivenCategory(selectedCategory).ToElements().ToList();
+            ElementParameterWrapper fromParameter = (elementParameterWrapperList1.Where(x => x.IsObjectSelected)).ElementAt(0);
+            ElementParameterWrapper toParameter = (elementParameterWrapperList2.Where(x => x.IsObjectSelected)).ElementAt(0);
+
+            var fromParameterStorageType = fromParameter.StorageType;
+            var toParameterStorageType = toParameter.StorageType;
+
+            using (Transaction t = new Transaction(Doc, "Set Parameters"))
             {
+                t.Start();
 
-            
-            // Muszę wiedzieć jaki parametr skopiować do jakiego parametru
-            var par1 = elementParameterWrapperList1.Where(x => x.IsObjectSelected);
-            string par1name = par1.ElementAt(0).Name;
-            var par2 = elementParameterWrapperList2.Where(x => x.IsObjectSelected);
-            string par2name = par2.ElementAt(0).Name;
+                foreach (Element element in elementsList)
+                {
+                    // Both paramters are shared paramters
+                    if (fromParameter.BuiltInParameterId == BuiltInParameter.INVALID && toParameter.BuiltInParameterId == BuiltInParameter.INVALID)
+                    {
+                        Parameter parameterToSet = element.get_Parameter(toParameter.GUID);
+                        var value = (element.get_Parameter(fromParameter.GUID)).AsString();
+                        parameterToSet.Set(value);
+                    }
+                    // Both paramters are BuiltInParameters
+                    else if (fromParameter.BuiltInParameterId != BuiltInParameter.INVALID && toParameter.BuiltInParameterId != BuiltInParameter.INVALID)
+                    {
+                        Parameter parameterToSet = element.get_Parameter(toParameter.BuiltInParameterId);
+                        var value = (element.get_Parameter(fromParameter.BuiltInParameterId)).AsString();
+                        parameterToSet.Set(value);
+                    }
+                    // fromParamter is shared while toParamter is BuiltInParameter
+                    else if (fromParameter.BuiltInParameterId == BuiltInParameter.INVALID && toParameter.BuiltInParameterId != BuiltInParameter.INVALID)
+                    {
+                        Parameter parameterToSet = element.get_Parameter(toParameter.BuiltInParameterId);
+                        var value = (element.get_Parameter(fromParameter.GUID)).AsString();
+                        parameterToSet.Set(value);
+                    }
+                    // fromParamter is BuiltInParamter while toParameter is shared
+                    else if (fromParameter.BuiltInParameterId != BuiltInParameter.INVALID && toParameter.BuiltInParameterId == BuiltInParameter.INVALID)
+                    {
+                        Parameter parameterToSet = element.get_Parameter(toParameter.GUID);
+                        var value = (element.get_Parameter(fromParameter.BuiltInParameterId)).AsString();
+                        parameterToSet.Set(value);
+                    }
+                }
+
+                t.Commit();
             }
-
-            catch (Exception ex)
-            {
-                return;
-            }
-
-            // Zebrać wszystkie elementy danej kategorii
-            // List<Element> elementsList = GetAllElementsOfGivenCategory(selectedCategory).ToElements().ToList();
-            // Skopiować wartość parametru From do parametru To
-
-
-            //using (Transaction t = new Transaction(Doc, "Set Parameters"))
-            //{
-            //    t.Start();
-            //    t.Commit();
-            //}
         }
 
-        // Click Copy data
         // Window pops up saying, are you sure you want to copy data from Parameter A to Parameter B? Click Yes or No
         // Parameter data is copied
     }
