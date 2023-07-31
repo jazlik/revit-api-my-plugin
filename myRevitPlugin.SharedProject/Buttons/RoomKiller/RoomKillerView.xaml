@@ -1,0 +1,94 @@
+﻿<Window x:Name="RoomKillerWindow"
+        x:Class="myRevitPlugin.RoomKillerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:myRevitPlugin"
+        mc:Ignorable="d"
+        Title="RoomKiller View"
+        SizeToContent="Height"
+        Width="900"
+        WindowStartupLocation="CenterScreen">
+    
+    <!--Every DataGridRow is going to have a property called IsSelected.-->
+    <Window.Resources>
+        <!-- IsSelected property is a default property of a setter which is describing which rows are selected and which are not selected.
+            This property is changed when row is selected(IsSelected equals true then and when it is not selected it is false).
+            Setter IsSelected property is binded to SpatialElementWrapper property IsObjectSelected.
+            How is that possible? ItemSource for DataGrid is SpatialObjects, which is an IEnumerable implementation. It works in that way, that each row of the DataGrid is an
+            object from SpatialObjects collection and each column of DataGrid is a property of object from SpatialObjects collection. So in that case, each row of DataGrid is a
+            SpatialElementWrapper object and columns are properties of SpatialElementWrapper, Name, Area etc..
+            (to learn more go here: https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.datagrid?view=windowsdesktop-6.0 )
+            So when some row is clicked(selected), the property of a Setter IsSelected is changed to true and IsObjectSelected property which is binded to it is also changed to true.
+            Only then "the programme" knows which SpatialElementWrapper objects are selected and which are not!
+        -->
+        <Style x:Key="DefaultRowsStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="IsSelected" Value="{Binding IsObjectSelected}"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid ItemsSource="{Binding SpatialObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  RowStyle="{StaticResource DefaultRowsStyle}"
+                  AutoGenerateColumns="False"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Hidden"
+                  CanUserAddRows="False"
+                  CanUserResizeColumns="False"
+                  CanUserSortColumns="False"
+                  IsReadOnly="False"
+                  SelectionMode="Extended"
+                  SelectionUnit="FullRow"
+                  MaxHeight="400"
+                  Margin="10">
+            
+            <!--The Columns inside DataGrid are defined and binded to each property of SpatialObjects collection object - in this case SpatialElementWrapper object.-->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name"
+                                    Binding="{Binding Name, Mode=OneWay}"
+                                    Width="*"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="Area"
+                                    Binding="{Binding Area, Mode=OneWay}"
+                                    Width="200"
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="IsObjectSelected"
+                                    Binding="{Binding IsObjectSelected, Mode=OneWay}"
+                                    Width="100"
+                                    IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="1"
+                Width="75"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,15,0"
+                Content="Close"
+                Command="{Binding Close, Mode=OneWay}"
+                CommandParameter="{Binding ElementName=RoomKillerWindow}"/>
+                
+                <!-- Use Command instead of OnClick -->
+                <!-- 1A. Command is binded to method Close and this view DataContext is viewmodel.
+                So after clicking a button, Close method is being searched in viewmodel.-->
+        
+        <Button Grid.Row="1"
+                Width="75"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,105,0"
+                Content="Delete"
+                Command="{Binding Delete, Mode=OneWay}"
+                CommandParameter="{Binding ElementName=RoomKillerWindow}"/>
+        
+    
+    </Grid>
+</Window>
