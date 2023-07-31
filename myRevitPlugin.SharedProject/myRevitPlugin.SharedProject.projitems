@@ -34,13 +34,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Buttons\ShowScheduleAndItsSheet\ShowScheduleAndItsSheetViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FirstButton\FirstButtonCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonView.xaml.cs">
-      <DependentUpon>SecondButtonView.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)RoomKiller\RoomKillerCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RoomKiller\RoomKillerModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RoomKiller\RoomKillerView.xaml.cs">
+      <DependentUpon>RoomKillerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SeccondButton\SpatialElementWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RoomKiller\RoomKillerViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RoomKiller\SpatialElementWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ImageUtils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,7 +64,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)SeccondButton\SecondButtonView.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)RoomKiller\RoomKillerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

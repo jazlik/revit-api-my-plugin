@@ -5,15 +5,15 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 
-namespace myRevitPlugin.SeccondButton
+namespace myRevitPlugin.RoomKiller
 {
-    public class SecondButtonModel
+    public class RoomKillerModel
     {
         // UiAPp object is rarely used. Usually when messing with UI stuff like switching the view or close current view.
         public UIApplication UiApp { get;  }
         // Document object is used more often, i.e. while deleting a room.
         public Document Doc { get; }
-        public SecondButtonModel(UIApplication uiApp)
+        public RoomKillerModel(UIApplication uiApp)
         {
             // Getting the current uiApplication.
             UiApp = uiApp;

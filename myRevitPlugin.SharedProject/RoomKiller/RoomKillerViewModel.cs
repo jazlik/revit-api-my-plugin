@@ -4,25 +4,25 @@ using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
-namespace myRevitPlugin.SeccondButton
+namespace myRevitPlugin.RoomKiller
 {
-    public class SecondButtonViewModel : ViewModelBase
+    public class RoomKillerViewModel : ViewModelBase
     {
-        public SecondButtonModel Model {get; set;}
-        // 2A. This method is searched from view. When SecondButtonViewModel is constructed
+        public RoomKillerModel Model {get; set;}
+        // 2A. This method is searched from view. When RoomKillerViewModel is constructed
         // OnClose method is passed into it and triggered, closing the window.
         public RelayCommand<Window> Close { get; set; }
         public RelayCommand<Window> Delete { get; set; }
 
         private ObservableCollection<SpatialElementWrapper> spatialObjects;
-        // This SpatialObjects collection is binded as ItemSource for DataGrid in SecondButtonView.
+        // This SpatialObjects collection is binded as ItemSource for DataGrid in RoomKillerView.
         public ObservableCollection<SpatialElementWrapper> SpatialObjects
         { 
             get { return spatialObjects; }
             set { spatialObjects = value; RaisePropertyChanged(() => SpatialObjects); }
         }
 
-        public SecondButtonViewModel(SecondButtonModel model)
+        public RoomKillerViewModel(RoomKillerModel model)
         {
             Model = model;
             SpatialObjects = Model.CollectSpatialObjects();

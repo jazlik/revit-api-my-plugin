@@ -5,7 +5,7 @@ using myRevitPlugin.Buttons.CopyDraftingViews;
 using myRevitPlugin.Buttons.ShowScheduleAndItsSheet;
 using myRevitPlugin.Buttons.CopyParameterValue;
 using myRevitPlugin.FirstButton;
-using myRevitPlugin.SeccondButton;
+using myRevitPlugin.RoomKiller;
 
 namespace myRevitPlugin
 {
@@ -33,7 +33,7 @@ namespace myRevitPlugin
 
             // Creating buttons.
             FirstButtonCommand.CreateButton(ribbonPanel);
-            SecondButtonCommand.CreateButton(ribbonPanel);
+            RoomKillerCommand.CreateButton(ribbonPanel);
             CopyDraftingViewsCommand.CreateButton(ribbonPanel);
             ShowScheduleAndItsSheetCommand.CreateButton(ribbonPanel);
             CopyParameterValueCommand.CreateButton(ribbonPanel);

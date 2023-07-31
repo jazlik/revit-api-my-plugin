@@ -7,12 +7,12 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using myRevitPlugin.Utilities;
 
-namespace myRevitPlugin.SeccondButton
+namespace myRevitPlugin.RoomKiller
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class SecondButtonCommand : IExternalCommand
+    public class RoomKillerCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -20,9 +20,9 @@ namespace myRevitPlugin.SeccondButton
             {
                 // Creating uiApp, model, viewModel and view inside the Execute method for a button.
                 var uiApp = commandData.Application;
-                var model = new SecondButtonModel(uiApp);
-                var viewModel = new SecondButtonViewModel(model);
-                var view = new SecondButtonView { DataContext = viewModel };
+                var model = new RoomKillerModel(uiApp);
+                var viewModel = new RoomKillerViewModel(model);
+                var view = new RoomKillerView { DataContext = viewModel };
 
                 // View is attached to current process, which is Revit as a parent-child relation.
                 // When Revit is closed, view window is also closed.
@@ -44,12 +44,12 @@ namespace myRevitPlugin.SeccondButton
             var assembly = Assembly.GetExecutingAssembly(); // Path to assembly needed for button.
             panel.AddItem(new PushButtonData(
                 MethodBase.GetCurrentMethod().DeclaringType?.Name,
-                "Second" + Environment.NewLine + "Button",
+                "Room" + Environment.NewLine + "Killer",
                 assembly.Location,
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName
                 )
             {
-                ToolTip = "Second Button command.",
+                ToolTip = "RoomKiller command.",
                 LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png") // _ is added as VS is adding it to folder name.
             }
             );

@@ -2,13 +2,13 @@
 namespace myRevitPlugin
 {
     /// <summary>
-    /// Interaction logic for SecondButtonView.xaml
+    /// Interaction logic for RoomKillerView.xaml
     /// </summary>
 
     // Remember to add "System.Xaml" assembly to references.
-    public partial class SecondButtonView
+    public partial class RoomKillerView
     {
-        public SecondButtonView()
+        public RoomKillerView()
         {
             InitializeComponent();
         }

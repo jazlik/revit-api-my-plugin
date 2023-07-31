@@ -1,7 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using System.ComponentModel;
 
-namespace myRevitPlugin.SeccondButton
+namespace myRevitPlugin.RoomKiller
 {
     public class SpatialElementWrapper : INotifyPropertyChanged
     {
