@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="RoomKiller View"
         SizeToContent="Height"
-        Width="900"
+        Width="600"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     
     <!--Every DataGridRow is going to have a property called IsSelected.-->

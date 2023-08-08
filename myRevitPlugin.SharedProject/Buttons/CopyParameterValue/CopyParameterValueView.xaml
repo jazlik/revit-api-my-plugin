@@ -7,9 +7,10 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Copy Parameters Value"
-        ResizeMode="NoResize"
         Height="240"
-        Width="480">
+        Width="480"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="RowToBeSelectedStyle" TargetType="{x:Type DataGridRow}">

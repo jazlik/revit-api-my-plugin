@@ -11,7 +11,9 @@
         Height="450"
         MinWidth="450"
         MaxWidth="1500"
-        Width="600">
+        Width="600"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="ComboBoxItemToBeSelectedStyle" TargetType="{x:Type ComboBoxItem}">

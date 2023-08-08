@@ -8,7 +8,9 @@
         mc:Ignorable="d"
         Title="Show Schedules And Their Sheets"
         Height="450"
-        Width="600">
+        Width="600"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="RowToBeSelectedStyle" TargetType="{x:Type DataGridRow}">
