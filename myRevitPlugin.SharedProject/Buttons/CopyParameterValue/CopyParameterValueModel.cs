@@ -126,6 +126,12 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
             return new ObservableCollection<ElementParameterWrapper>(clonedObservableCollection);
         }
 
+        /// <summary>
+        /// Copy value from one parameter to other parameter. Parameters are copying between all elements of a given category that are present in the model.
+        /// </summary>
+        /// <param name="elementParameterWrapperList1"></param>
+        /// <param name="elementParameterWrapperList2"></param>
+        /// <param name="selectedCategory"></param>
         public void CopyParameterValueFromParameterToParameter(IList<ElementParameterWrapper> elementParameterWrapperList1, IList<ElementParameterWrapper> elementParameterWrapperList2, Category selectedCategory)
         {
             List<Element> elementsList = GetAllElementsOfGivenCategory(selectedCategory).ToElements().ToList();
@@ -175,6 +181,11 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
                         {
                             case StorageType.String:
                                 value = parameterToSetFrom.AsString();
+                                if ((value != null) && (value != ""))
+                                {
+                                    parameterToSet.Set(value);
+                                }
+
                                 break;
 
                             case StorageType.Integer:
@@ -187,6 +198,10 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
 
                             case StorageType.Double:
                                 value = parameterToSetFrom.AsDouble();
+                                if (value != null)
+                                {
+                                    parameterToSet.Set(value);
+                                }
                                 break;
 
                             case StorageType.None:
@@ -195,16 +210,6 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
                             default:
                                 value = "_";
                                 break;
-                        }
-
-                        if (value != null && value != "")
-                        {
-                            parameterToSet.Set(value);
-                        }
-
-                        else
-                        {
-                            continue;
                         }
                     }
                     t.Commit();
