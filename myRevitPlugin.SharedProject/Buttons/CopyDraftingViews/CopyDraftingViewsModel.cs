@@ -15,7 +15,7 @@ namespace myRevitPlugin.Buttons.CopyDraftingViews
         #region Properties
         public UIApplication UiApp { get; }
         public Document Doc { get; }
-        public CopyDraftingViewsViewModel ViewModel { get; }
+        // public CopyDraftingViewsViewModel ViewModel { get; }
 
         public CopyDraftingViewsModel(UIApplication uiApp)
         {
@@ -53,16 +53,13 @@ namespace myRevitPlugin.Buttons.CopyDraftingViews
 
         public IEnumerable<View> CollectViewsFromDocument(Document doc)
         {
-
-            List<Type> viewTypes = new List<Type>();
-            viewTypes.Add(typeof(ViewDrafting));
-
             FilteredElementCollector collector = new FilteredElementCollector(doc);
-            ElementMulticlassFilter filter = new ElementMulticlassFilter(viewTypes);
+            ElementClassFilter filter = new ElementClassFilter(typeof(ViewDrafting));
             collector.WherePasses(filter);
             collector.WhereElementIsViewIndependent();
-            var views = collector.OfType<View>();
 
+            // filter was selecting Views with ViewType.Rendering also. So only Views with ViewType.ViewDratfing are selected
+            var views = collector.OfType<View>().Where(x => x.ViewType == ViewType.DraftingView);
             return views;
         }
 
