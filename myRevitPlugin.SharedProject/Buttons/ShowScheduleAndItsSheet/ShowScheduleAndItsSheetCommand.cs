@@ -47,7 +47,7 @@ namespace myRevitPlugin.Buttons.ShowScheduleAndItsSheet
                 )
             {
                 ToolTip = "For finding schedule and its sheet owner.",
-                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png")
+                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.schedule_finder.png")
             }
             );
         }

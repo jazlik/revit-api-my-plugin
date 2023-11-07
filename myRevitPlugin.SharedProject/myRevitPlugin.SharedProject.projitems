@@ -71,5 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)desc.txt" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\copy_parameters.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\copy_views.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\schedule_finder.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\room_kill.png" />
   </ItemGroup>
 </Project>

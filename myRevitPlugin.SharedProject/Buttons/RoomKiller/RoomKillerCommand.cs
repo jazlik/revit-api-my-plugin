@@ -50,7 +50,7 @@ namespace myRevitPlugin.Buttons.RoomKiller
                 )
             {
                 ToolTip = "RoomKiller command.",
-                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png") // _ is added as VS is adding it to folder name.
+                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.room_kill.png") // _ is added as VS is adding it to folder name.
             }
             );
         }

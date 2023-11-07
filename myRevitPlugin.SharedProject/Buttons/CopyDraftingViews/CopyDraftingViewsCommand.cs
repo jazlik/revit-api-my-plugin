@@ -48,7 +48,7 @@ namespace myRevitPlugin.Buttons.CopyDraftingViews
                 )
             {
                 ToolTip = "Collects drafting views from linked models and enables copying them to host model.",
-                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png")
+                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.copy_views.png")
             }
             );
         }

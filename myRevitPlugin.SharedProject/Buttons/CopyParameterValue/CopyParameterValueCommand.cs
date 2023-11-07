@@ -48,7 +48,7 @@ namespace myRevitPlugin.Buttons.CopyParameterValue
                 )
             {
                 ToolTip = "For copying values between parameters.",
-                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.2-symbol.png")
+                LargeImage = ImageUtils.LoadImage(assembly, "_32x32.copy_parameters.png")
             }
             );
         }
